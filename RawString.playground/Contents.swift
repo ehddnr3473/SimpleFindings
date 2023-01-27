@@ -1,10 +1,10 @@
 import UIKit
 
 // Basic String
-var complexJsonString = "{\"id\": \"ehddnr3473\", \"name\": \"Donguk Kim\"}"
+let complexJsonString = "{\"id\": \"ehddnr3473\", \"name\": \"Donguk Kim\"}"
 
 // Raw Strings
-var rawJsonString = #"{"id": "ehddnr3473", "name": "Donguk Kim"}"#
+let rawJsonString = #"{"id": "ehddnr3473", "name": "Donguk Kim"}"#
 
 func toJson(input: String) {
     guard let data = input.data(using: .utf8) else { return }
