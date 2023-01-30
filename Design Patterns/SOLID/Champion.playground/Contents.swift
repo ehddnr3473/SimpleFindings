@@ -26,6 +26,12 @@ class MeleeMinion: Champion {
     }
 }
 
+class CasterMinion: Champion {
+    override func speak() -> (String, String) {
+        fatalError("저는 말을 못해요.")
+    }
+}
+
 func speak(champion: Champion) {
     let speak = champion.speak()
     print("나는 \(speak.0). \(speak.1)")
@@ -39,3 +45,6 @@ speak(champion: lucian)
 
 let meleeMinion = MeleeMinion(name: "Melee minion", dialogue: "", hitPoint: 477)
 speak(champion: meleeMinion)
+
+let casterMinion = CasterMinion(name: "Caster minion", dialogue: "", hitPoint: 296)
+speak(champion: casterMinion)
