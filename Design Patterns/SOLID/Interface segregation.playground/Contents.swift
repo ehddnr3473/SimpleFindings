@@ -7,9 +7,8 @@
 
 import UIKit
 
-
 // 수륙양용 - 큰 덩어리 인터페이스
-protocol ICarBoat {
+protocol Amphibious: AnyObject {
     func drive()
     func turnLeft()
     func turnRight()
@@ -19,47 +18,39 @@ protocol ICarBoat {
     func steerRight()
 }
 
-class Tico: ICarBoat {
+class Tico: Amphibious {
     func drive() {
-        //
+        // implement ..
     }
     
     func turnLeft() {
-        //
+        // implement ..
     }
     
     func turnRight() {
-        //
+        // implement ..
     }
     
     // 사용하지 않음
-    func steer() {
-        //
-    }
-    
-    func steerLeft() {
-        //
-    }
-    
-    func steerRight() {
-        //
-    }
+    func steer() { }
+    func steerLeft() { }
+    func steerRight() { }
 }
 
-// ICarBoat를 ICar와 IBoat로 분리하여, 필요한 메서드만 이용할 수 있도록 만들어줄 수 있음.
-protocol ICar {
+// Amphibious를 Car와 Boat로 분리하여, 필요한 메서드만 이용할 수 있도록 만들어줄 수 있음.
+protocol Car: AnyObject {
     func drive()
     func turnLeft()
     func turnRight()
 }
 
-protocol IBoat {
+protocol Boat: AnyObject {
     func steer()
     func steerLeft()
     func steerRight()
 }
 
-class Genesis: ICar {
+class Genesis: Car {
     func drive() {
         //
     }
@@ -73,7 +64,7 @@ class Genesis: ICar {
     }
 }
 
-class Avante: ICar {
+class Avante: Car {
     func drive() {
         //
     }
@@ -87,7 +78,7 @@ class Avante: ICar {
     }
 }
 
-class CarBoat: ICar, IBoat {
+class CarBoat: Car, Boat {
     func drive() {
         //
     }
@@ -111,6 +102,4 @@ class CarBoat: ICar, IBoat {
     func steerRight() {
         //
     }
-    
-    
 }
