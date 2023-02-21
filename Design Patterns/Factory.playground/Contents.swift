@@ -1,110 +1,49 @@
-import UIKit
+/*
+ 팩토리 메서드 패턴(Factory Method Pattern)
+ - 객체 생성을 캡슐화하는 디자인 패턴
+ - 객체를 생성하는 코드를 클라이언트에서 분리하여 별도의 팩토리 클래스에서 관리
+ - 인터페이스를 이용하여 객체 생성을 추상화. 이를 통해 클라이언트는 생성될 객체의 구체적인 타입을 알 필요 없이, 팩토리에서 제공하는 인터페이스를 사용하여 객체를 생성할 수 있음.
+ - 객체 생성 로직이 복잡해서 가독성을 해치거나 객체 생성 시점이 런타임에 결정되는 경우에 유용.
+ - 객체 생성 과정을 추상화하여 유연성을 높이고, 코드 재사용성을 높일 수 있음.
+ */
 
 protocol BallGame {
-    associatedtype T: Ball
+    var ball: String { get set }
+}
+
+class Soccer: BallGame {
+    var ball: String
     
-    var ball: T { get set }
-    var rentalFee: Int { get set }
-    init(ball: T)
-    func getPrice() -> Int
-}
-
-protocol Ball {
-    var rentalFee: Int { get set }
-}
-
-class SoccerBall: Ball {
-    var rentalFee = 1000
-}
-
-class Soccer<T: SoccerBall>: BallGame {
-    var ball: T
-    var rentalFee = 10000
-    
-    required init(ball: T) {
+    init(ball: String) {
         self.ball = ball
     }
+}
+class Badminton: BallGame {
+    var ball: String
     
-    func getPrice() -> Int {
-        rentalFee + ball.rentalFee
+    init(ball: String) {
+        self.ball = ball
     }
 }
 
 protocol BallGameFactory {
-    associatedtype BallGameType: BallGame
-    func createBallGame() -> BallGameType
+    func createBallGame(ball: String) -> BallGame
 }
 
 class SoccerFactory: BallGameFactory {
-    func createBallGame() -> some BallGame {
-        Soccer(ball: SoccerBallFactory().createBall() as! SoccerBall)
+    func createBallGame(ball: String) -> BallGame {
+        Soccer(ball: ball)
     }
 }
 
 class BadmintonFactory: BallGameFactory {
-    func createBallGame() -> some BallGame {
-        Badminton(ball: ShuttlecockFactory().createBall() as! Shuttlecock)
+    func createBallGame(ball: String) -> BallGame {
+        Badminton(ball: ball)
     }
 }
 
-protocol BallFactory {
-    func createBall() -> Ball
-}
+let soccerFactory = SoccerFactory()
+let soccer = soccerFactory.createBallGame(ball: "Soccer ball")
 
-class SoccerBallFactory: BallFactory {
-    func createBall() -> Ball {
-        SoccerBall()
-    }
-}
-
-class ShuttlecockFactory: BallFactory {
-    func createBall() -> Ball {
-        Shuttlecock()
-    }
-}
-
-class Shuttlecock: Ball {
-    var rentalFee = 500
-}
-
-class Badminton<T: Shuttlecock>: BallGame {
-    var ball: T
-    var rentalFee = 5000
-    
-    required init(ball: T) {
-        self.ball = ball
-    }
-    
-    func getPrice() -> Int {
-        rentalFee + ball.rentalFee
-    }
-}
-
-class Game {
-    private var factory: any BallGameFactory
-    private var fee = 0
-    
-    init(factory: some BallGameFactory) {
-        self.factory = factory
-    }
-    
-    func change(factory: some BallGameFactory) {
-        self.factory = factory
-    }
-    
-    private func calculateFee() {
-        fee = factory.createBallGame().getPrice()
-    }
-    
-    func printFee() {
-        calculateFee()
-        print(fee)
-    }
-}
-
-var game = Game(factory: SoccerFactory())
-game.printFee()
-
-game.change(factory: BadmintonFactory())
-game.printFee()
-
+let badmintonFactory = BadmintonFactory()
+let badminton = badmintonFactory.createBallGame(ball: "Shuttlecock")
