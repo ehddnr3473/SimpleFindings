@@ -5,45 +5,47 @@
  */
 
 // 1
-protocol Animal {
-    func speak() -> String
+protocol BallGame {
+    var ball: String { get set }
 }
 
-class Dog: Animal {
-    func speak() -> String {
-        "Woof"
+class Soccer: BallGame {
+    var ball: String
+    
+    init(ball: String) {
+        self.ball = ball
+    }
+}
+class Badminton: BallGame {
+    var ball: String
+    
+    init(ball: String) {
+        self.ball = ball
     }
 }
 
-class Cat: Animal {
-    func speak() -> String {
-        "Meow"
+protocol BallGameFactory {
+    func createBallGame(ball: String) -> BallGame
+}
+
+class SoccerFactory: BallGameFactory {
+    func createBallGame(ball: String) -> BallGame {
+        Soccer(ball: ball)
     }
 }
 
-protocol AnimalFactory {
-    func createAnimal() -> Animal
-}
-
-class DogFactory: AnimalFactory {
-    func createAnimal() -> Animal {
-        Dog()
+class BadmintonFactory: BallGameFactory {
+    func createBallGame(ball: String) -> BallGame {
+        Badminton(ball: ball)
     }
 }
 
-class CatFactory: AnimalFactory {
-    func createAnimal() -> Animal {
-        Cat()
-    }
-}
+let soccerFactory = SoccerFactory()
+let soccer = soccerFactory.createBallGame(ball: "Soccer ball")
 
-let dogFactory = DogFactory()
-let dog = dogFactory.createAnimal()
-print(dog.speak())
+let badmintonFactory = BadmintonFactory()
+let badminton = badmintonFactory.createBallGame(ball: "Shuttlecock")
 
-let catFactory = CatFactory()
-let cat = catFactory.createAnimal()
-print(cat.speak())
 
 
 // 2
