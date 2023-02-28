@@ -42,6 +42,7 @@ enum Country {
 }
 
 enum CurrencyFactory {
+    // factory method in one implemented factory.
     static func currency(for country: Country) -> CurrencyDescribing? {
         switch country {
         case .spain, .greece:
