@@ -8,7 +8,7 @@ protocol NewFrame {
     var height: Double { get }
 }
 
-struct OldFrameTarget {
+struct OldFrameTarget { // adaptee
     let width: Float
     let height: Float
 }
